@@ -37,6 +37,21 @@ class Cat {
     this.#nickname = newName;
   }
 
+  set successChance(newChance) {
+    if (typeof newChance !== 'number' || isNaN(newChance)) {
+      throw new TypeError('successChance must be a number');
+    }
+
+    if (newChance < 0 || newChance > 1) {
+      throw new RangeError('successChance must be a number between 0 and 1');
+    }
+    this.#successChance = newChance;
+  }
+
+  #expandedHunting () {
+    return Math.random() + this.#successChance >= 0.6 ? ++this.#quantityOfCaughtMice : this.#quantityOfCaughtMice;
+  }
+
   meow() {
     console.log(`The ${this.#nickname} is happy, that's why he meows`);
   }
@@ -54,7 +69,7 @@ class Cat {
   }
 
   hunt() {
-    return Math.random() + this.#successChance >= 0.6 ? this.#quantityOfCaughtMice++ : this.#quantityOfCaughtMice;
+    return this.#expandedHunting();
   }
 }
 
@@ -78,7 +93,7 @@ class StrayCat extends Cat {
       throw new RangeError("You need to go hunting! 0 mice left");
     }
 
-    return this.#eatenMice++;
+    return ++this.#eatenMice;
   }
 }
 
