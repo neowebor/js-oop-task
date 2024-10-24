@@ -78,9 +78,7 @@ class StrayCat extends Cat {
       throw new RangeError("You need to go hunting! 0 mice left");
     }
 
-    this.#eatenMice++;
-
-    return this.#eatenMice;
+    return this.#eatenMice++;
   }
 }
 
